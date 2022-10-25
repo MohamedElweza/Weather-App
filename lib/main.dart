@@ -17,15 +17,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
@@ -65,15 +56,22 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int i = 0; i < 5; i++) {
       final date = d.add(Duration(days: i));
       dates.add(Padding(
-        padding: const EdgeInsets.only(top: 30.0),
+        padding: const EdgeInsets.only(
+            top: 8.0,
+            bottom: 8.0,
+            left: 20.0,
+            right: 20.0),
         child: Column(
           children: [
-            Text(
-              formatter.format(date),
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Text(
+                formatter.format(date),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
+              ),
             ),
             // Text(_monthFormatter.format(date)),
           ],
@@ -87,21 +85,21 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, snapShot) {
             if (snapShot.hasData) {
               response = snapShot.data!;
-              DateTime parsedDateTime =
-                  DateTime.parse(response.list.first.dt_txt);
-              String formatDate =
-                  DateFormat("yyyy-MM-dd").format(parsedDateTime);
-              List tp = response.list;
-              List daily = [];
-              tp.forEach((element) {
-                if (daily.contains(formatDate)) {
-                } else {
-                  daily.add(element);
-                  // print(date);
-                }
-              });
-              // print(date);
-              print(daily.toString());
+              // DateTime parsedDateTime =
+              //     DateTime.parse(response.list.first.dt_txt);
+              // String formatDate =
+              //     DateFormat("yyyy-MM-dd").format(parsedDateTime);
+              // List tp = response.list;
+              // List daily = [];
+              // tp.forEach((element) {
+              //   if (daily.contains(formatDate)) {
+              //   } else {
+              //     daily.add(element);
+              //     // print(date);
+              //   }
+              // });
+              // // print(date);
+              // // print(daily.toString());
 
               return SingleChildScrollView(
                 child: Container(
@@ -146,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.red),
                                       onPressed: search,
-                                      child: Text('Search'))),
+                                      child: const Text('Search'))),
                             ],
                           ),
                         ),
@@ -160,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Image.network(
                           'https://openweathermap.org/img/wn/${response.list.first.weather.first.icon}@2x.png'),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -173,23 +171,119 @@ class _MyHomePageState extends State<MyHomePage> {
                         style:
                             const TextStyle(fontSize: 20, color: Colors.white),
                       ),
-                      Container(
+                      SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         // color: Colors.blueAccent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(40.0),
-                          child: Column(
-                            children: [
-                              Column(children: [
-                                Row(
-                                  children: dates
-                                      .map((widget) => Expanded(child: widget))
-                                      .toList(),
+                        child: Column(
+                          children: [
+                            Column(children: [
+                              const SizedBox(height: 30,),
+                              Row(
+                                children: dates
+                                    .map((widget) => Expanded(child: widget))
+                                    .toList(),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Image.network(
+                                                'https://openweathermap.org/img/wn/${response.list.elementAt(0).weather.first.icon}@2x.png'),
+                                            Text(
+                                              response.list
+                                                  .elementAt(0)
+                                                  .main
+                                                  .temp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.network(
+                                                'https://openweathermap.org/img/wn/${response.list.elementAt(8).weather.first.icon}@2x.png'),
+                                            Text(
+                                              response.list
+                                                  .elementAt(8)
+                                                  .main
+                                                  .temp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.network(
+                                                'https://openweathermap.org/img/wn/${response.list.elementAt(16).weather.first.icon}@2x.png'),
+                                            Text(
+                                              response.list
+                                                  .elementAt(16)
+                                                  .main
+                                                  .temp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.network(
+                                                'https://openweathermap.org/img/wn/${response.list.elementAt(24).weather.first.icon}@2x.png'),
+                                            Text(
+                                              response.list
+                                                  .elementAt(24)
+                                                  .main
+                                                  .temp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Image.network(
+                                                'https://openweathermap.org/img/wn/${response.list.elementAt(32).weather.first.icon}@2x.png'),
+                                            Text(
+                                              response.list
+                                                  .elementAt(32)
+                                                  .main
+                                                  .temp
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ]),
-                            ],
-                          ),
+                              ),
+                            ]),
+                          ],
                         ),
                       ),
                     ],
